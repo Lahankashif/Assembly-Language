@@ -1,0 +1,43 @@
+DOSSEG
+ .MODEL SMALL
+.STACK 100H
+.DATA
+v1 DB 'ENTER A STRING$'
+.CODE
+MAIN PROC
+MOV AX,@DATA
+MOV DS,AX
+
+MOV DX,OFFSET v1
+MOV AH,9
+INT 21H
+
+MOV CX,5
+
+START:
+MOV AH,1
+INT 21H                    ;pushing elements
+MOV AH,0
+PUSH AX
+LOOP START
+
+MOV DX,10
+mov ah,2
+INT 21H                   ;enter and carriage key
+MOV DX,13
+mov ah,2
+INT 21H
+
+
+MOV CL,5
+SCND:
+POP DX               ;poping elements
+MOV AH,2
+INT 21H
+LOOP SCND
+MOV AH,4CH
+INT 21H
+
+
+MAIN ENDP
+END MAIN
